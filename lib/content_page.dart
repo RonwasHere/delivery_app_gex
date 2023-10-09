@@ -150,14 +150,14 @@ class _ContentPageState extends State<ContentPage> {
                 itemCount: info.length,
                 itemBuilder: (_, i) {
                   return GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed('/detail', arguments: {
-                        'title' : info[i]['title'].toString(),
-                        'text' : info[i]['text'].toString(),
-                        'name' : info[i]['name'].toString(),
-                        'img' : info[i]['img'].toString(),
-                        'time' : info[i]['time'].toString(),
-                        'prize' : info[i]['prize'].toString(),
+                        'title': info[i]['title'].toString(),
+                        'text': info[i]['text'].toString(),
+                        'name': info[i]['name'].toString(),
+                        'img': info[i]['img'].toString(),
+                        'time': info[i]['time'].toString(),
+                        'prize': info[i]['prize'].toString(),
                       });
                     },
                     child: Container(
@@ -247,7 +247,12 @@ class _ContentPageState extends State<ContentPage> {
                     height: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10), color: Color(0xFFfdc33c)),
-                    child: GestureDetector(),
+                    child: GestureDetector(
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -256,76 +261,81 @@ class _ContentPageState extends State<ContentPage> {
               height: 20,
             ),
             Expanded(
-                child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: 4,
-                        itemBuilder: (_, i) {
-                          return Container(
-                            width: width,
-                            height: 100,
-                            margin: const EdgeInsets.only(left: 25, right: 25, bottom: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color(0xFFebf8fd),
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 20, right: 20),
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 40,
-                                    backgroundImage: AssetImage("img/background.jpg"),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Status",
-                                        style: TextStyle(
-                                            color: Color(0xFFfdebb2),
-                                            fontSize: 12,
-                                            decoration: TextDecoration.none),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      SizedBox(
-                                        width: 170,
-                                        child: Text(
-                                          "Text",
-                                          style: TextStyle(
-                                              color: Color(0xFF3b3f42),
-                                              fontSize: 18,
-                                              decoration: TextDecoration.none),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Expanded(child: Container()),
-                                  Container(
-                                    width: 70,
-                                    height: 70,
-                                    child: Text(
-                                      "Time",
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          decoration: TextDecoration.none,
-                                          color: Color(0xFFb2b8bb)),
-                                    ),
-                                  ),
-                                ],
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: list.length,
+                  itemBuilder: (_, i) {
+                    return Container(
+                      width: width,
+                      height: 100,
+                      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xFFebf8fd),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundImage: AssetImage(
+                                list[i]['img'],
                               ),
                             ),
-                          );
-                        }))),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  list[i]['status'],
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 20,
+                                      decoration: TextDecoration.none),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  width: 170,
+                                  child: Text(
+                                    list[i]['text'],
+                                    style: TextStyle(
+                                        color: Color(0xFF3b3f42),
+                                        fontSize: 18,
+                                        decoration: TextDecoration.none),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Expanded(child: Container()),
+                            Container(
+                              width: 70,
+                              height: 70,
+                              child: Text(
+                                "Time",
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    decoration: TextDecoration.none,
+                                    color: Color(0xFFb2b8bb)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

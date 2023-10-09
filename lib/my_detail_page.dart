@@ -1,5 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +13,21 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  List imgs = [];
+  _readData() async {
+    await DefaultAssetBundle.of(context).loadString("json/detail.json").then((s) {
+      setState(() {
+        imgs = json.decode(s);
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    _readData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -48,7 +65,9 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage(Get.arguments['img']),
+                        backgroundImage: AssetImage(
+                          Get.arguments['img'],
+                        ),
                       ),
                       SizedBox(
                         width: 10,
@@ -58,7 +77,7 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "name",
+                            Get.arguments['name'],
                             style: TextStyle(
                                 color: Color(0xFF3b3f42),
                                 fontSize: 18,
@@ -259,21 +278,27 @@ class _DetailPageState extends State<DetailPage> {
                       ])),
                 )),
             //images
-            Stack(children: [
-              for (int i = 0; i < 5; i++)
-                Positioned(
-                  top: 590,
-                  left: (20 + i * 35).toDouble(),
-                  width: 50,
-                  height: 50,
-                  child: Container(
-                    decoration: BoxDecoration(
+            Stack(
+              children: [
+                for (int i = 0; i < imgs.length; i++)
+                  Positioned(
+                    top: 590,
+                    left: (20 + i * 35).toDouble(),
+                    width: 50,
+                    height: 50,
+                    child: Container(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         image: DecorationImage(
-                            image: AssetImage("img/background.jpg"), fit: BoxFit.cover)),
-                  ),
-                )
-            ]),
+                            image: AssetImage(
+                              imgs[i]['img'],
+                            ),
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                  )
+              ],
+            ),
             //favourite
             Positioned(
                 top: 670,
