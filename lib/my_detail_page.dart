@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:delivery_app_gex/content_page.dart';
+import 'package:delivery_app_gex/controller/detail_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +35,8 @@ class _DetailPageState extends State<DetailPage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     int _currentIndex = 0;
+    final DetailController fav = Get.put(DetailController());
+
     return Scaffold(
       body: Container(
         color: Color(0xFFc5e5f3),
@@ -42,8 +46,11 @@ class _DetailPageState extends State<DetailPage> {
               top: 50,
               left: 10,
               child: IconButton(
-                onPressed: () => Get.back(),
-                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () => Get.to(() => ContentPage()),
+                icon: Icon(
+                  Icons.home_outlined,
+                  color: Colors.white,
+                ),
               ),
             ),
             Positioned(
@@ -306,11 +313,20 @@ class _DetailPageState extends State<DetailPage> {
                 child: Row(
                   children: [
                     Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20), color: Color(0xFFfbc33e)),
-                        child: Icon(Icons.favorite_border, color: Colors.white)),
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20), color: Color(0xFFfbc33e)),
+                      child: IconButton(
+                        onPressed: () {
+                          fav.favCounter();
+                        },
+                        icon: Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       width: 10,
                     ),
