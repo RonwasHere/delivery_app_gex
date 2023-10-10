@@ -31,6 +31,7 @@ class _RecentContestState extends State<RecentContest> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Color(0xff69c5df),
         leading: IconButton(
           onPressed: () => Get.back(),
